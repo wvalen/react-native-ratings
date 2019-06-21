@@ -151,11 +151,11 @@ export default class SwipeRating extends Component {
   }
 
   renderRatings() {
-    const { imageSize, ratingCount, type, tintColor } = this.props;
+    const { imageSize, ratingCount, type, tintColor, starContainer } = this.props;
     const source = TYPES[type].source;
 
     return times(ratingCount, index => (
-      <View key={index} style={styles.starContainer}>
+      <View key={index} style={starContainer}>
         <Image source={source} style={{ width: imageSize, height: imageSize, tintColor }} />
       </View>
     ));
@@ -330,6 +330,7 @@ SwipeRating.propTypes = {
   onFinishRating: PropTypes.func,
   showRating: PropTypes.bool,
   style: ViewPropTypes.style,
+  starContainer: ViewPropTypes.style,
   readonly: PropTypes.bool,
   startingValue: PropTypes.number,
   fractions: fractionsType,
