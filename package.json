@@ -1,5 +1,5 @@
 {
-  "name": "react-native-ratings",
+  "name": "react-native-ratings-valen",
   "version": "6.3.1",
   "description": "The standard Ratings component for React Native",
   "main": "./src/index.js",
@@ -26,7 +26,7 @@
   "peerDependencies": {
     "react": "^16.0.0"
   },
-  "author": "Monte Thakkar",
+  "author": "Monte Thakkar, Valen",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Monte9/react-native-ratings/issues"
