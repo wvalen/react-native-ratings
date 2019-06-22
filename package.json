@@ -1,6 +1,6 @@
 {
   "name": "react-native-ratings-valen",
-  "version": "6.3.7",
+  "version": "6.3.8",
   "description": "The standard Ratings component for React Native",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",

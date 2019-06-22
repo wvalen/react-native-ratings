@@ -195,7 +195,7 @@ export default class SwipeRating extends Component {
     const source = TYPES[type].source;
 
     return times(ratingCount, index => (
-      <View key={index} style={{ flexDirection: "row" }}>
+      <View key={index} style={{ flexDirection: "row", width: imageSize + spaceBetween}}>
         <Image
           source={source}
           style={{ width: imageSize, height: imageSize, tintColor }}
@@ -296,7 +296,7 @@ export default class SwipeRating extends Component {
     }
 
     return this.state.display ? (
-      <View pointerEvents={readonly ? "none" : "auto"} style={style}>
+      <View pointerEvents={readonly ? "none" : "auto"} style={[style, { paddingLeft: 1 }]}>
         {showRating && this.displayCurrentRating()}
         <View
           style={styles.starsWrapper}
