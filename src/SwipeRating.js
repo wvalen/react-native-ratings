@@ -120,7 +120,7 @@ export default class SwipeRating extends Component {
     let lessValue = this.props.startingValue - flootValue;
 
     let sWidth = flootValue * realFixSize + lessValue * imageSize;
-    console.info("getPrimaryViewStyle", flootValue, lessValue, sWidth);
+    // console.info("getPrimaryViewStyle", flootValue, lessValue, sWidth);
 
     const width = position.x.interpolate(
       {
@@ -156,7 +156,7 @@ export default class SwipeRating extends Component {
 
     let sWidth =
       (ratingCount - flootValue) * (imageSize + spaceBetween) - lessValue * imageSize;
-    console.info("getSecondaryViewStyle", flootValue, lessValue, sWidth);
+    // console.info("getSecondaryViewStyle", flootValue, lessValue, sWidth);
 
     const backgroundColor = TYPES[type].backgroundColor;
 
@@ -200,7 +200,7 @@ export default class SwipeRating extends Component {
           source={source}
           style={{ width: imageSize, height: imageSize, tintColor }}
         />
-        <View style={{ width: spaceBetween, backgroundColor: "#fff" }} />
+        { spaceBetween > 0 && <View style={{ width: spaceBetween, backgroundColor: "#fff" }} />}
       </View>
     ));
   }
