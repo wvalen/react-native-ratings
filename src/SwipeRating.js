@@ -110,15 +110,15 @@ export default class SwipeRating extends Component {
 
   getPrimaryViewStyle() {
     const { position } = this.state;
-    const { imageSize, ratingCount, type } = this.props;
+    const { imageSize, ratingCount, type, spaceBetween } = this.props;
 
     const color = TYPES[type].color;
-    const realFixSize = imageSize + 8;
+    const realFixSize = imageSize + spaceBetween;
 
     let flootValue = Math.floor(this.props.startingValue);
     let lessValue = this.props.startingValue - flootValue;
 
-    let sWidth = flootValue * 24 + lessValue * 16;
+    let sWidth = flootValue * realFixSize + lessValue * imageSize;
     console.info("getPrimaryViewStyle", flootValue, lessValue, sWidth);
 
     const width = position.x.interpolate(
@@ -141,19 +141,20 @@ export default class SwipeRating extends Component {
     return {
       backgroundColor: color,
       width: sWidth,
-      height: 16
+      height: imageSize
     };
   }
 
   getSecondaryViewStyle() {
     const { position } = this.state;
-    const { imageSize, ratingCount, type } = this.props;
-    const realFixSize = imageSize - 8;
+    const { imageSize, ratingCount, type, spaceBetween } = this.props;
+    const realFixSize = imageSize - spaceBetween;
 
     let flootValue = Math.floor(this.props.startingValue);
     let lessValue = this.props.startingValue - flootValue;
 
-    let sWidth = (ratingCount - flootValue) * 24 - lessValue * 16;
+    let sWidth =
+      (ratingCount - flootValue) * realFixSize - lessValue * imageSize;
     console.info("getSecondaryViewStyle", flootValue, lessValue, sWidth);
 
     const backgroundColor = TYPES[type].backgroundColor;
@@ -178,12 +179,18 @@ export default class SwipeRating extends Component {
     return {
       backgroundColor,
       width: sWidth,
-      height: 16
+      height: imageSize
     };
   }
 
   renderRatings() {
-    const { imageSize, ratingCount, type, tintColor } = this.props;
+    const {
+      imageSize,
+      ratingCount,
+      type,
+      tintColor,
+      spaceBetween
+    } = this.props;
     const source = TYPES[type].source;
 
     return times(ratingCount, index => (
@@ -192,7 +199,7 @@ export default class SwipeRating extends Component {
           source={source}
           style={{ width: imageSize, height: imageSize, tintColor }}
         />
-        <View style={{ width: 8, backgroundColor: "#fff" }} />
+        <View style={{ width: spaceBetween, backgroundColor: "#fff" }} />
       </View>
     ));
   }
@@ -392,5 +399,6 @@ SwipeRating.propTypes = {
   readonly: PropTypes.bool,
   startingValue: PropTypes.number,
   fractions: fractionsType,
-  minValue: PropTypes.number
+  minValue: PropTypes.number,
+  spaceBetween: PropTypes.number
 };
