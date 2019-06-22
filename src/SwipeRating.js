@@ -155,7 +155,7 @@ export default class SwipeRating extends Component {
     let lessValue = this.props.startingValue - flootValue;
 
     let sWidth =
-      (ratingCount - flootValue) * realFixSize - lessValue * imageSize;
+      (ratingCount - flootValue) * (imageSize + spaceBetween) - lessValue * imageSize;
     console.info("getSecondaryViewStyle", flootValue, lessValue, sWidth);
 
     const backgroundColor = TYPES[type].backgroundColor;
