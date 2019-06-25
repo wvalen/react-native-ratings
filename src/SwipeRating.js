@@ -71,7 +71,10 @@ export default class SwipeRating extends Component {
       onPanResponderMove: (event, gesture) => {
         const newPosition = new Animated.ValueXY();
         newPosition.setValue({ x: gesture.dx, y: 0 });
-        this.setState({ position: newPosition, value: gesture.dx });
+
+        if (this.gettingGrades) {
+          this.setState({ position: newPosition, value: gesture.dx });
+        }
       },
       onPanResponderRelease: event => {
         const rating = this.getCurrentRating(this.state.value);
@@ -89,18 +92,26 @@ export default class SwipeRating extends Component {
   }
 
   async componentDidMount() {
+    this.gettingGrades = true;
+
     try {
       const STAR_IMAGE = await require("./images/star.png");
       const HEART_IMAGE = await require("./images/heart.png");
       const ROCKET_IMAGE = await require("./images/rocket.png");
       const BELL_IMAGE = await require("./images/bell.png");
 
-      this.setState({ display: true });
+      if (this.gettingGrades) {
+        this.setState({ display: true });
+      }
     } catch (err) {
       console.log(err);
     }
 
     this.setCurrentRating(this.props.startingValue);
+  }
+
+  componentWillUnmount() {
+    this.gettingGrades = false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -155,7 +166,8 @@ export default class SwipeRating extends Component {
     let lessValue = this.props.startingValue - flootValue;
 
     let sWidth =
-      (ratingCount - flootValue) * (imageSize + spaceBetween) - lessValue * imageSize;
+      (ratingCount - flootValue) * (imageSize + spaceBetween) -
+      lessValue * imageSize;
     // console.info("getSecondaryViewStyle", flootValue, lessValue, sWidth);
 
     const backgroundColor = TYPES[type].backgroundColor;
@@ -195,12 +207,17 @@ export default class SwipeRating extends Component {
     const source = TYPES[type].source;
 
     return times(ratingCount, index => (
-      <View key={index} style={{ flexDirection: "row", width: imageSize + spaceBetween}}>
+      <View
+        key={index}
+        style={{ flexDirection: "row", width: imageSize + spaceBetween }}
+      >
         <Image
           source={source}
           style={{ width: imageSize, height: imageSize, tintColor }}
         />
-        { spaceBetween > 0 && <View style={{ width: spaceBetween, backgroundColor: "#fff" }} />}
+        {spaceBetween > 0 && (
+          <View style={{ width: spaceBetween, backgroundColor: "#fff" }} />
+        )}
       </View>
     ));
   }
@@ -250,7 +267,10 @@ export default class SwipeRating extends Component {
 
     const newPosition = new Animated.ValueXY();
     newPosition.setValue({ x: value, y: 0 });
-    this.setState({ position: newPosition, value });
+
+    if (this.gettingGrades) {
+      this.setState({ position: newPosition, value });
+    }
   }
 
   displayCurrentRating() {
@@ -296,7 +316,10 @@ export default class SwipeRating extends Component {
     }
 
     return this.state.display ? (
-      <View pointerEvents={readonly ? "none" : "auto"} style={[style, { paddingLeft: 1 }]}>
+      <View
+        pointerEvents={readonly ? "none" : "auto"}
+        style={[style, { paddingLeft: 1 }]}
+      >
         {showRating && this.displayCurrentRating()}
         <View
           style={styles.starsWrapper}
